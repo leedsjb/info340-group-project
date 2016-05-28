@@ -1,5 +1,5 @@
-body {
-    font-size: 18pt;
+/*body {
+    font-size: 12pt;
 }
 
 h1, h3, #results {
@@ -23,6 +23,70 @@ header {
 .content ul {
     padding-top: 25px;
 }
-#title{
+
+.title{
     font-size:48pt;
+    background-color: #4C9DC3;
+    padding: 0.5em;
+}
+
+#name {
+    font-size: 0.7em;
+    color: white;
+    text-transform: uppercase;
+}
+
+#logo {
+    height: 120px;
+    width: 120px;
+
+}*/
+
+
+body{
+  background: #F3F9FD;
+}
+
+h1, #question {
+    text-align: center;
+}
+
+div.well{
+  height: 250px;
+} 
+
+.Absolute-Center {
+  margin: auto;
+  /*position: absolute;*/
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.Absolute-Center.is-Responsive {
+  width: 50%; 
+  height: 50%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 40px;
+}
+
+#logo-container {
+  margin: auto;
+  margin-bottom: 0px;
+  width:300px;
+  height:320px;
+  background-image:url('http://www.pilotsnpaws.org/wp-content/uploads/2014/09/pnp-round-logo.png');
+  background-repeat: no-repeat;
+}
+
+#question {
+    font-size: 2em;
+}
+
+.btn {
+    background-color: #4C9DC3;
+    font-size: 18px;
+    margin-top: 10px;
+    padding: 10px;
+    width: 100px;
+    
 }
