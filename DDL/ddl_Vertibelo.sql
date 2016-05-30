@@ -1,7 +1,4 @@
 -- Vertibelo output
-
--- tables
--- Table: Airport
 CREATE TABLE Airport (
     ICAO character(4) NOT NULL CONSTRAINT Airport_pk PRIMARY KEY,
     location_id integer NOT NULL,
@@ -14,18 +11,18 @@ CREATE TABLE Dog (
     pet_id integer NOT NULL CONSTRAINT Dog_pk PRIMARY KEY,
     shelter_id integer NOT NULL,
     rescuer_id integer NOT NULL,
+    trip_id integer NOT NULL,
     isLiscensed boolean NOT NULL,
     name varchar(32),
     weight integer,
     age integer,
     breed varchar(32),
     pet_license integer,
-    Trip_id integer NOT NULL,
     CONSTRAINT Rescuer_Dog FOREIGN KEY (rescuer_id)
     REFERENCES Rescuer (member_id),
     CONSTRAINT Shelter_Dog FOREIGN KEY (shelter_id)
     REFERENCES Shelter (id),
-    CONSTRAINT Dog_Trip FOREIGN KEY (Trip_id)
+    CONSTRAINT Dog_Trip FOREIGN KEY (trip_id)
     REFERENCES Trip (id)
 );
 
@@ -67,11 +64,8 @@ CREATE TABLE Message (
 CREATE TABLE Pilot (
     member_id integer NOT NULL CONSTRAINT Pilot_pk PRIMARY KEY,
     cert_num integer NOT NULL,
-    Trip_id integer NOT NULL,
     CONSTRAINT User_Pilot FOREIGN KEY (member_id)
-    REFERENCES Member (id),
-    CONSTRAINT Pilot_Trip FOREIGN KEY (Trip_id)
-    REFERENCES Trip (id)
+    REFERENCES Member (id)
 );
 
 -- Table: Plane
@@ -124,7 +118,9 @@ CREATE TABLE Shelter (
 
 -- Table: Trip
 CREATE TABLE Trip (
-    id integer NOT NULL CONSTRAINT Trip_pk PRIMARY KEY
+    id integer NOT NULL CONSTRAINT Trip_pk PRIMARY KEY,
+    pilot_id integer NOT NULL,
+    distance decimal(5,2) NOT NULL,
+    CONSTRAINT Pilot_Trip FOREIGN KEY (pilot_id)
+    REFERENCES Pilot (member_id)
 );
-
--- End of file.
