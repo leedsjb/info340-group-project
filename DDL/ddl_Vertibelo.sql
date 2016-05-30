@@ -35,7 +35,7 @@ CREATE TABLE Location (
 
 -- Table: Member
 CREATE TABLE Member (
-    id integer NOT NULL CONSTRAINT Member_pk PRIMARY KEY AUTOINCREMENT,
+    id serial NOT NULL CONSTRAINT Member_pk PRIMARY KEY,
     location_id integer NOT NULL,
     first_name varchar(32),
     last_name varchar(32),
@@ -109,7 +109,7 @@ CREATE TABLE Rescuer (
 
 -- Table: Shelter
 CREATE TABLE Shelter (
-    id integer NOT NULL CONSTRAINT Shelter_pk PRIMARY KEY AUTOINCREMENT,
+    id serial NOT NULL CONSTRAINT Shelter_pk PRIMARY KEY,
     location_id integer NOT NULL,
     name varchar(32) NOT NULL,
     CONSTRAINT Shelter_Location FOREIGN KEY (location_id)
