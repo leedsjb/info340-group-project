@@ -44,6 +44,9 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
+		router.GET("/pilot.html", func(c *gin.Context) {
+			c.HTML(http.StatusOK, "pilot.html", nil)
+		})
 
 	router.GET("/ping", func(c *gin.Context) {
 		ping := db.Ping()

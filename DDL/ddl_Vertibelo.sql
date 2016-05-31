@@ -1,7 +1,4 @@
 -- Vertibelo output
-
--- tables
--- Table: Airport
 CREATE TABLE Airport (
     ICAO character(4) NOT NULL CONSTRAINT Airport_pk PRIMARY KEY,
     location_id integer NOT NULL,
@@ -14,18 +11,18 @@ CREATE TABLE Dog (
     pet_id integer NOT NULL CONSTRAINT Dog_pk PRIMARY KEY,
     shelter_id integer NOT NULL,
     rescuer_id integer NOT NULL,
+    trip_id integer NOT NULL,
     isLiscensed boolean NOT NULL,
     name varchar(32),
     weight integer,
     age integer,
     breed varchar(32),
     pet_license integer,
-    Trip_id integer NOT NULL,
     CONSTRAINT Rescuer_Dog FOREIGN KEY (rescuer_id)
     REFERENCES Rescuer (member_id),
     CONSTRAINT Shelter_Dog FOREIGN KEY (shelter_id)
     REFERENCES Shelter (id),
-    CONSTRAINT Dog_Trip FOREIGN KEY (Trip_id)
+    CONSTRAINT Dog_Trip FOREIGN KEY (trip_id)
     REFERENCES Trip (id)
 );
 
@@ -38,7 +35,7 @@ CREATE TABLE Location (
 
 -- Table: Member
 CREATE TABLE Member (
-    id integer NOT NULL CONSTRAINT Member_pk PRIMARY KEY AUTOINCREMENT,
+    id serial NOT NULL CONSTRAINT Member_pk PRIMARY KEY,
     location_id integer NOT NULL,
     first_name varchar(32),
     last_name varchar(32),
@@ -54,7 +51,7 @@ CREATE TABLE Message (
     message_id integer NOT NULL CONSTRAINT Message_pk PRIMARY KEY,
     sender_user_id integer NOT NULL,
     reply_to_message_id integer,
-    sent_datetime datetime NOT NULL,
+    sent_datetime date NOT NULL,
     title varchar(20) NOT NULL,
     message_text text,
     CONSTRAINT Thread_Comment_Thread_Comment FOREIGN KEY (reply_to_message_id)
@@ -67,11 +64,8 @@ CREATE TABLE Message (
 CREATE TABLE Pilot (
     member_id integer NOT NULL CONSTRAINT Pilot_pk PRIMARY KEY,
     cert_num integer NOT NULL,
-    Trip_id integer NOT NULL,
     CONSTRAINT User_Pilot FOREIGN KEY (member_id)
-    REFERENCES Member (id),
-    CONSTRAINT Pilot_Trip FOREIGN KEY (Trip_id)
-    REFERENCES Trip (id)
+    REFERENCES Member (id)
 );
 
 -- Table: Plane
@@ -98,7 +92,7 @@ CREATE TABLE Recipient (
     message_id integer NOT NULL,
     user_id integer NOT NULL,
     message_read boolean NOT NULL,
-    recipient_read_date datetime,
+    recipient_read_date date,
     CONSTRAINT Recipient_pk PRIMARY KEY (message_id,user_id),
     CONSTRAINT Thread_Comment_Form_Thread FOREIGN KEY (message_id)
     REFERENCES Message (message_id),
@@ -115,7 +109,7 @@ CREATE TABLE Rescuer (
 
 -- Table: Shelter
 CREATE TABLE Shelter (
-    id integer NOT NULL CONSTRAINT Shelter_pk PRIMARY KEY AUTOINCREMENT,
+    id serial NOT NULL CONSTRAINT Shelter_pk PRIMARY KEY,
     location_id integer NOT NULL,
     name varchar(32) NOT NULL,
     CONSTRAINT Shelter_Location FOREIGN KEY (location_id)
@@ -124,7 +118,10 @@ CREATE TABLE Shelter (
 
 -- Table: Trip
 CREATE TABLE Trip (
-    id integer NOT NULL CONSTRAINT Trip_pk PRIMARY KEY
+    id integer NOT NULL CONSTRAINT Trip_pk PRIMARY KEY,
+    pilot_id integer NOT NULL,
+    distance decimal(5,2) NOT NULL,
+    flight_date date NOT NULL,
+    CONSTRAINT Pilot_Trip FOREIGN KEY (pilot_id)
+    REFERENCES Pilot (member_id)
 );
-
--- End of file.
