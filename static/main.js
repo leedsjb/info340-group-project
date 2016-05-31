@@ -1,6 +1,7 @@
 'use strict'
 
-$(function(){
+$(document).ready(function(){
+
     $.get("/ping", function(data){
         if(data.error == "true"){
             $("#results").prepend("<div class='alert alert-danger'><strong>Error!</strong> "+ data.message +"</div>");
@@ -10,6 +11,11 @@ $(function(){
     $.get("/query1", function(data){
         $("#firstQuery").append(data);
     }, "html")
+        .then(() => { // callback function, do not execute until $.get completes
+            $("clickMe").click(function(e){
+                console.log("CLICKED");
+             });
+        })
 
     $.get("/query2", function(data){
         $("#secondQuery").append(data);
@@ -19,5 +25,15 @@ $(function(){
         $("#thirdQuery").append(data);
     }, "html")
 
-})
+});
+
+
+
+
+
+
+
+
+
+
 
