@@ -11,7 +11,7 @@ CREATE TABLE Dog (
     pet_id integer NOT NULL CONSTRAINT Dog_pk PRIMARY KEY,
     shelter_id integer NOT NULL,
     rescuer_id integer NOT NULL,
-    trip_id integer NOT NULL,
+    trip_id integer,
     isLiscensed boolean NOT NULL,
     name varchar(32),
     weight integer,
