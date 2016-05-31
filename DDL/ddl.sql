@@ -46,6 +46,25 @@ INSERT INTO airport VALUES ('KJCI', 3);
 INSERT INTO airport VALUES ('KGEG', 4);
 INSERT INTO airport VALUES ('KBDN', 5);
 
+--plane
+INSERT INTO plane VALUES ('KSEA', 'N3073');
+INSERT INTO plane VALUES ('KSEA', 'N4432');
+INSERT INTO plane VALUES ('KSEA', 'N5306');
+INSERT INTO plane VALUES ('KSEA', 'N2385');
+INSERT INTO plane VALUES ('KSEA', 'N4145');
+INSERT INTO plane VALUES ('KJCI', 'N5938');
+INSERT INTO plane VALUES ('KJCI', 'N6538');
+INSERT INTO plane VALUES ('KPDX', 'N1211');
+INSERT INTO plane VALUES ('KPDX', 'N7049');
+INSERT INTO plane VALUES ('KPDX', 'N2558');
+INSERT INTO plane VALUES ('KPDX', 'N7736');
+INSERT INTO plane VALUES ('KGEG', 'N3427');
+INSERT INTO plane VALUES ('KGEG', 'N6882');
+INSERT INTO plane VALUES ('KGEG', 'N6270');
+INSERT INTO plane VALUES ('KPDX', 'N1082');
+INSERT INTO plane VALUES ('KBDN', 'N7107');
+INSERT INTO plane VALUES ('KBDN', 'N4582');
+
 --member
 INSERT INTO member VALUES (DEFAULT, 6, 'Jay', 'Gatsby', 'Great_Gatsby',
    'd4149504fc5ac01450c94b500bc22634',TRUE);
@@ -82,6 +101,31 @@ INSERT INTO member VALUES (DEFAULT, 21, 'George', 'Hayduke', 'Monkey_Wrench',
 INSERT INTO member VALUES (DEFAULT, 22, 'Jesse', 'Custer', 'Preacher',
    '786d47dddc5c43599ceff742b8ac81e4',TRUE);
 
+--pilot
+INSERT INTO pilot VALUES (6, 522737);
+INSERT INTO pilot VALUES (7, 719947);
+INSERT INTO pilot VALUES (13, 831347);
+INSERT INTO pilot VALUES (21, 953595);
+INSERT INTO pilot VALUES (22, 959287);
+
+--rescuer
+INSERT INTO rescuer VALUES (1);
+INSERT INTO rescuer VALUES (2);
+INSERT INTO rescuer VALUES (3);
+INSERT INTO rescuer VALUES (4);
+INSERT INTO rescuer VALUES (5);
+INSERT INTO rescuer VALUES (8);
+INSERT INTO rescuer VALUES (9);
+INSERT INTO rescuer VALUES (10);
+INSERT INTO rescuer VALUES (11);
+INSERT INTO rescuer VALUES (12);
+INSERT INTO rescuer VALUES (14);
+INSERT INTO rescuer VALUES (16);
+INSERT INTO rescuer VALUES (17);
+INSERT INTO rescuer VALUES (18);
+INSERT INTO rescuer VALUES (19);
+INSERT INTO rescuer VALUES (20);
+
 --shelter
 INSERT INTO shelter VALUES (DEFAULT, 23, 'Seattle Animal Shelter');
 INSERT INTO shelter VALUES (DEFAULT, 24, 'The Humane Society for Tacoma & Pierce County');
@@ -99,17 +143,8 @@ INSERT INTO shelter VALUES (DEFAULT, 33, 'Lewis County Animal Shelter');
 INSERT INTO message VALUES (message_id, sender_user_id, reply_to_message_id,
    sent_datetime,title, message_text);
 
---pilot
-INSERT INTO pilot VALUES (member_id, cert_num);
-
---plane
-INSERT INTO plane VALUES (registration, ICAO);
-
 --plane_pilot
 INSERT INTO plane_pilot VALUES (id, pilot_id, plane_registration);
-
---rescuer
-INSERT INTO rescuer VALUES (member_id);
 
 --dog
 INSERT INTO dog VALUES (pet_id, shelter_id, rescuer_id,
