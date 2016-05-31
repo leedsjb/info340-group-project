@@ -51,7 +51,7 @@ CREATE TABLE Message (
     message_id integer NOT NULL CONSTRAINT Message_pk PRIMARY KEY,
     sender_user_id integer NOT NULL,
     reply_to_message_id integer,
-    sent_datetime datetime NOT NULL,
+    sent_datetime date NOT NULL,
     title varchar(20) NOT NULL,
     message_text text,
     CONSTRAINT Thread_Comment_Thread_Comment FOREIGN KEY (reply_to_message_id)
@@ -92,7 +92,7 @@ CREATE TABLE Recipient (
     message_id integer NOT NULL,
     user_id integer NOT NULL,
     message_read boolean NOT NULL,
-    recipient_read_date datetime,
+    recipient_read_date date,
     CONSTRAINT Recipient_pk PRIMARY KEY (message_id,user_id),
     CONSTRAINT Thread_Comment_Form_Thread FOREIGN KEY (message_id)
     REFERENCES Message (message_id),
@@ -121,6 +121,7 @@ CREATE TABLE Trip (
     id integer NOT NULL CONSTRAINT Trip_pk PRIMARY KEY,
     pilot_id integer NOT NULL,
     distance decimal(5,2) NOT NULL,
+    flight_date date NOT NULL,
     CONSTRAINT Pilot_Trip FOREIGN KEY (pilot_id)
     REFERENCES Pilot (member_id)
 );
