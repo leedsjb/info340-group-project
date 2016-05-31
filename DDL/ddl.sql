@@ -141,15 +141,78 @@ INSERT INTO shelter VALUES (DEFAULT, 32, 'Whatcom Humane Society');
 INSERT INTO shelter VALUES (DEFAULT, 33, 'Lewis County Animal Shelter');
 
 --message
-INSERT INTO message VALUES (message_id, sender_user_id, reply_to_message_id,
-   sent_datetime,title, message_text);
+--INSERT INTO message VALUES (message_id, sender_user_id, reply_to_message_id[N], sent_datetime, title, message_text);
+INSERT INTO message VALUES (DEFAULT, 1, 2016-05-29 12:23:24, 'Biscuit from Seattle', 'Thank you so much for offering to fly our dog Biscuit to a no-kill shelter!');
+INSERT INTO message VALUES (DEFAULT, 2, 2016-05-29 10:16:23, 'Availability for transport', 'Will you still be able to make it this week?');
+INSERT INTO message VALUES (DEFAULT, 2, 2, 2016-05-30 12:55:11, 'Availability for transport', 'That''s great to hear! Thank you!');
+INSERT INTO message VALUES (DEFAULT, 3, 2016-05-30 13:14:08, 'Picking up Oscar', 'Thank you so much for being able to pick him up such last minute');
+INSERT INTO message VALUES (DEFAULT, 4, 2016-05-30 08:08:19, 'Bad Weather', 'Will you still be able to make it tomorrow? The weather report shows a strong storm rolling in');
+INSERT INTO message VALUES (DEFAULT, 5, 2016-05-30 15:20:12, 'Heavy winds an issue?', 'There''s supposed to be 70mph winds tomorrow, can you still make it?');
+INSERT INTO message VALUES (DEFAULT, 6, 2016-05-31 20:49:29, 'Pickin up from Seattle', 'How long will you be in the area for?');
+INSERT INTO message VALUES (DEFAULT, 6, 8, 2016-05-31 21:45:11, 'Picking up from Seattle', 'I''ll be around for about a week');
+INSERT INTO message VALUES (DEFAULT, 7, 2016-05-31 07:05:23, 'Number of dogs to transport', 'I can transport 3-5 depending on their weight');
+INSERT INTO message VALUES (DEFAULT, 8, 2016-05-31 21:22:56, 'Storm over?', 'Is the weather better there yet?');
+INSERT INTO message VALUES (DEFAULT, 9, 2016-05-31 15:23:43, 'Transport availability', 'Are you still able to fly into town this week?');
+INSERT INTO message VALUES (DEFAULT, 10, 2016-05-31 23:35:12, 'Post-rescue questions', 'Is Wawa still stressed out from the flight back?');
+INSERT INTO message VALUES (DEFAULT, 11, 2016-05-31 16:45:23, 'Flight cancellation', 'I unfortunately won''t be able to help out this Friday on transporting Winston to Seattle');
+INSERT INTO message VALUES (DEFAULT, 12, 2016-05-31 06:34:55, 'Nearby shelters', 'Do you know of any shleters in the area that also have animals that could be picked up? I have the extra space');
+
+--recipient
+--INSERT INTO recipient VALUES (message_id, user_id, message_read, recipient_read_date)
+INSERT INTO recipient VALUES (1, 1, FALSE);
+INSERT INTO recipient VALUES (2, 2, TRUE, 2016-05-30 11:01:59);
+INSERT INTO recipient VALUES (3, 2, FALSE);
+INSERT INTO recipient VALUES (4, 3, FALSE);
+INSERT INTO recipient VALUES (5, 4, FALSE);
+INSERT INTO recipient VALUES (6, 5, FALSE);
+INSERT INTO recipient VALUES (7, 6, TRUE, 2016-05-31 21:11:33);
+INSERT INTO recipient VALUES (8, 6, FALSE);
+INSERT INTO recipient VALUES (9, 7, FALSE);
+INSERT INTO recipient VALUES (10, 8, FALSE);
+INSERT INTO recipient VALUES (11, 9, FALSE);
+INSERT INTO recipient VALUES (12, 10, FALSE);
+INSERT INTO recipient VALUES (13, 11, FALSE);
+INSERT INTO recipient VALUES (14, 12, FALSE);
 
 --plane_pilot
-INSERT INTO plane_pilot VALUES (id, pilot_id, plane_registration);
+--INSERT INTO plane_pilot VALUES (id, pilot_id, plane_registration);
+INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N307');
+INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N443');
+INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N530');
+INSERT INTO plane_pilot VALUES (DEFAULT, 7, 'N238');
+INSERT INTO plane_pilot VALUES (DEFAULT, 7, 'N414');
+INSERT INTO plane_pilot VALUES (DEFAULT, 13, 'N593');
+INSERT INTO plane_pilot VALUES (DEFAULT, 13, 'N653');
+INSERT INTO plane_pilot VALUES (DEFAULT, 13, 'N121');
+INSERT INTO plane_pilot VALUES (DEFAULT, 13, 'N704');
+INSERT INTO plane_pilot VALUES (DEFAULT, 13, 'N255');
+INSERT INTO plane_pilot VALUES (DEFAULT, 21, 'N773');
+INSERT INTO plane_pilot VALUES (DEFAULT, 21, 'N342');
+INSERT INTO plane_pilot VALUES (DEFAULT, 21, 'N688');
+INSERT INTO plane_pilot VALUES (DEFAULT, 21, 'N627');
+INSERT INTO plane_pilot VALUES (DEFAULT, 22, 'N108');
+INSERT INTO plane_pilot VALUES (DEFAULT, 22, 'N710');
+INSERT INTO plane_pilot VALUES (DEFAULT, 22, 'N458');
 
 --dog
-INSERT INTO dog VALUES (pet_id, shelter_id, rescuer_id,
-   isLiscensed, name, weight, age, breed, pet_license);
+INSERT INTO dog VALUES (DEFAULT, 10, 20, 1, TRUE, 'Biscuit', 20, 10, 'Pug', 203489);
+INSERT INTO dog VALUES (DEFAULT, 10, 22, 2, TRUE, 'Max', 50, 3, 'German Shepherd', 34803);
+INSERT INTO dog VALUES (DEFAULT, 10, 24, 3, TRUE, 'Charlie', 34, 5, 'Siberian Husky', 34095);
+INSERT INTO dog VALUES (DEFAULT, 11, 26, 3, TRUE, 'Buddy', 22, 4, 'Golden Retriever', 34953);
+INSERT INTO dog VALUES (DEFAULT, 11, 29, 3, TRUE, 'Lucy', 11, 2, 'German Shepherd', 23208);
+INSERT INTO dog VALUES (DEFAULT, 12, 30, 4, TRUE, 'Molly', 93, 6, 'Pug', 265065);
+INSERT INTO dog VALUES (DEFAULT, 12, 32, 4, TRUE, 'Daisy', 59, 3, 'Siberian Husky', 569785);
+INSERT INTO dog VALUES (DEFAULT, 12, 18, 5, TRUE, 'Rocky', 83, 4, 'Pug', 573847);
+INSERT INTO dog VALUES (DEFAULT, 13, 24, 5, TRUE, 'Jack', 25, 6, 'German Shepherd', 344560);
+INSERT INTO dog VALUES (DEFAULT, 13, NULL, NULL, TRUE, 'Duke', 55, 9, 'Siberian Husky', 42323);
+INSERT INTO dog VALUES (DEFAULT, 13, NULL, NULL, TRUE, 'Cooper', 12, 2, 'Pug', 6589498);
+INSERT INTO dog VALUES (DEFAULT, 14, NULL, NULL, TRUE, 'Riley', 17, 3, 'Golden Retriever', 569849);
+INSERT INTO dog VALUES (DEFAULT, 14, NULL, NULL, FALSE, 'Bear', 50, 1, 'Siberian Husky', 24509);
+
 
 --trip
-INSERT INTO trip VALUES (id, pilot_id, distance, flight_date);
+INSERT INTO trip VALUES (DEFAULT, 21, 51.53, '2016-04-16');
+INSERT INTO trip VALUES (DEFAULT, 22, 102.23, '2016-05-04');
+INSERT INTO trip VALUES (DEFAULT, 22, 230.11, '2016-05-04');
+INSERT INTO trip VALUES (DEFAULT, 21, 134.55, '2016-05-04');
+INSERT INTO trip VALUES (DEFAULT, 22, 82.85, '2016-05-04');
