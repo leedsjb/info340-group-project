@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -14,16 +13,32 @@
             <div class="row">
                 <div class="pilotForm is-Responsive">
                     
-                        <h1>Find a Dog to Transport</h1>
+                        <h1>Edit a Dog's Information</h1>
 
                         <form role="form" class="fillForm">
                             <div class="form-group">
+                                <label for="name">Dog Name:</label>
+                                <input type="input" class="form-control" id="name">
+                            </div>
+                            <div class="form-group">
                                 <label for="location">Location:</label>
-                                <input type="input" class="form-control" id="location">
+                                <input type="input" class="form-control" id="location" required>
                             </div>
                             <div class="form-group">
                                 <label for="weight">Weight:</label>
                                 <input type="input" class="form-control" id="weight">
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age:</label>
+                                <input type="input" class="form-control" id="age">
+                            </div>
+                            <div class="form-group">
+                                <label for="breed">Breed:</label>
+                                <input type="input" class="form-control" id="breed">
+                            </div>
+                            <div class="form-group">
+                                <label for="license">Pet License:</label>
+                                <input type="input" class="form-control" id="license">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>     
