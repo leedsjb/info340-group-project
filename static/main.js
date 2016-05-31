@@ -19,5 +19,17 @@ $(function(){
         $("#thirdQuery").append(data);
     }, "html")
 
+    // $("#clickMe").click(function() {
+    //     console.log("Clicked! ************");
+    // });
+
+
+    $(document).ready(function() {
+        console.log("Loaded!"); 
+        $(".clickMe").click(function() {
+            console.log("Clicked! ************");
+        });
+    }); 
 })
+
 

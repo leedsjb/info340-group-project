@@ -83,14 +83,17 @@ func main() {
 		// once you've added all the columns in, close the header
 		table += "</thead><tbody>"
 		// declare all your RETURNED columns here
-		var name string      // <--- EDIT THESE LINES
-		var title string //<--- ^^^^
+		var dogName string      // <--- EDIT THESE LINES
+		var shelterName string //<--- ^^^^
+		var weight int
+		var age int
+		var breed string
 		for rows.Next() {
 			// assign each of them, in order, to the parameters of rows.Scan.
 			// preface each variable with &
-			rows.Scan(&name, &title) // <--- EDIT THIS LINE
+			rows.Scan(&dogName, &shelterName, &weight, &age, &breed) // <--- EDIT THIS LINE
 			// can't combine ints and strings in Go. Use strconv.Itoa(int) instead
-			table += "<tr><td>" + name + "</td><td>" + title + "</td></tr>" // <--- EDIT THIS LINE
+			table += "<tr><td>" + dogName + "</td><td>" + shelterName + "</td><td>" + strconv.Itoa(weight) + "</td><td>" + strconv.Itoa(age) + "</td><td>" + breed + "</td><td><button type='button' id='clickMe' class='btn btn-primary'>Edit</button></td></tr>"
 		}
 		// finally, close out the body and table
 		table += "</tbody></table>"
