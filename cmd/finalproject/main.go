@@ -50,6 +50,9 @@ func main() {
 	router.GET("/rescuer_edit.html", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "rescuer_edit.html", nil)
 	})
+	router.GET("/rescuer_list.html", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "rescuer_list.html", nil)
+	})
 
 	router.GET("/ping", func(c *gin.Context) {
 		ping := db.Ping()
@@ -64,7 +67,7 @@ func main() {
 	router.GET("/query1", func(c *gin.Context) {
 		table := "<table class='table'><thead><tr>"
 		// put your query here
-		rows, err := db.Query("SELECT artist.name, album.title FROM artist NATURAL JOIN album") // <--- EDIT THIS LINE
+		rows, err := db.Query("SELECT dog.name, shelter.name, weight, age, breed FROM dog JOIN shelter ON shelter.id = dog.shelter_id") // <--- EDIT THIS LINE
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
