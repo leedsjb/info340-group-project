@@ -1,3 +1,5 @@
+'use strict'
+
 $(function(){
     $.get("/ping", function(data){
         if(data.error == "true"){
@@ -18,3 +20,4 @@ $(function(){
     }, "html")
 
 })
+
