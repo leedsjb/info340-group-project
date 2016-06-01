@@ -145,7 +145,9 @@ func main() {
 	router.GET("/query2", func(c *gin.Context) {
 		table := "<table class='table'><thead><tr>"
 		// put your query here
-		rows, err := db.Query("SELECT dog.name, dog.weight, member.first_name, member.last_name FROM dog JOIN rescuer ON dog.rescuer_id = rescuer.member_id JOIN member ON rescuer.member_id = member.id") // <--- EDIT THIS LINE
+		rows, err := db.Query("SELECT dog.name, dog.weight, member.first_name, member.last_name" +
+			" FROM dog JOIN rescuer ON dog.rescuer_id = rescuer.member_id" +
+			" JOIN member ON rescuer.member_id = member.id") // <--- EDIT THIS LINE
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
@@ -168,10 +170,11 @@ func main() {
 
 		for rows.Next() {
 			rows.Scan(&dogName, &dogWeight, &rescuerFirstName, &rescuerLastName) // put columns here prefaced with &
-			table += "<tr><td>" + dogName + "</td></tr>" +
-				"<tr><td>" + strconv.Itoa(dogWeight) + "</td></tr>" +
-				"<tr><td>" + rescuerFirstName + "</td></tr>" +
-				"<tr><td>" + rescuerLastName + "</td></tr>"
+			table +=
+				"<tr><td>" + dogName +
+					strconv.Itoa(dogWeight) +
+					rescuerFirstName +
+					rescuerLastName + "</td></tr>"
 		}
 		// finally, close out the body and table
 		table += "</tbody></table>"
