@@ -1,5 +1,5 @@
 $(document).ready(function(){
-   $("#btn btn-primary").click(function() {
+   $("#show").click(function() {
      $("#queryTable").toggle();
    });
 });
