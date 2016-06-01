@@ -100,64 +100,102 @@ func main() {
 		c.Data(http.StatusOK, "text/html", []byte(table))
 	})
 
-	router.GET("/query2", func(c *gin.Context) {
-		table := "<table class='table'><thead><tr>"
-		// put your query here
-		rows, err := db.Query("SELECT album.title FROM album WHERE album.cost::numeric > (SELECT AVG(album.cost::numeric) FROM album)") // <--- EDIT THIS LINE
+	router.GET("/edit", func(c *gin.Context) {
+
+		dog_detail, err := db.Query("SELECT dog.name, shelter.name, dog.weight, dog.age, dog.breed, dog.pet_license FROM dog JOIN shelter ON dog.shelter_id = shelter.id WHERE pet_id = 8")
+
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
 		}
-		// foreach loop over rows.Columns, using value
-		cols, _ := rows.Columns()
-		if len(cols) == 0 {
-			c.AbortWithStatus(http.StatusNoContent)
+
+		// type Login struct {
+		// 	dogName string
+		// }
+
+		var dogName string
+		var shelterName string
+		var weight int
+		var age int
+		var breed string
+		var petLicense int;
+
+		for dog_detail.Next() {
+			dog_detail.Scan(&dogName, &shelterName, &weight, &age, &breed, &petLicense) // put columns here prefaced with &
 		}
-		for _, value := range cols {
-			table += "<th class='text-center'>" + value + "</th>"
-		}
-		// once you've added all the columns in, close the header
-		table += "</thead><tbody>"
-		// columns
-		var title string
-		for rows.Next() {
-			rows.Scan(&title) // put columns here prefaced with &
-			table += "<tr><td>" + title + "</td></tr>" // <--- EDIT THIS LINE
-		}
-		// finally, close out the body and table
-		table += "</tbody></table>"
-		c.Data(http.StatusOK, "text/html", []byte(table))
+
+		log.Println(dogName, breed)
+
+		c.JSON(http.StatusOK, gin.H{
+			"dogName" : dogName,
+			"shelterName" : shelterName,
+			"weight" : weight,
+			"age" : age,
+			"breed" : breed,
+			"petLicense" : petLicense,
+			})
+
+
 	})
 
-	router.GET("/query3", func(c *gin.Context) {
-		table := "<table class='table'><thead><tr>"
-		// put your query here
-		rows, err := db.Query("SELECT artist.name, COUNT(album.albumId) FROM artist NATURAL JOIN album GROUP BY artist.artistId") // <--- EDIT THIS LINE
-		if err != nil {
-			// careful about returning errors to the user!
-			c.AbortWithError(http.StatusInternalServerError, err)
-		}
-		// foreach loop over rows.Columns, using value
-		cols, _ := rows.Columns()
-		if len(cols) == 0 {
-			c.AbortWithStatus(http.StatusNoContent)
-		}
-		for _, value := range cols {
-			table += "<th class='text-center'>" + value + "</th>"
-		}
-		// once you've added all the columns in, close the header
-		table += "</thead><tbody>"
-		// columns
-		var name string
-		var count int
-		for rows.Next() {
-			rows.Scan(&name, &count) // put columns here prefaced with &
-			table += "<tr><td>" + name + "</td><td>" + strconv.Itoa(count) + "</td></tr>" // <--- EDIT THIS LINE
-		}
-		// finally, close out the body and table
-		table += "</tbody></table>"
-		c.Data(http.StatusOK, "text/html", []byte(table))
-	})
+	// router.GET("/query2", func(c *gin.Context) {
+	// 	table := "<table class='table'><thead><tr>"
+	// 	// put your query here
+	// 	rows, err := db.Query("SELECT album.title FROM album WHERE album.cost::numeric > (SELECT AVG(album.cost::numeric) FROM album)") // <--- EDIT THIS LINE
+	// 	if err != nil {
+	// 		// careful about returning errors to the user!
+	// 		c.AbortWithError(http.StatusInternalServerError, err)
+	// 	}
+	// 	// foreach loop over rows.Columns, using value
+	// 	cols, _ := rows.Columns()
+	// 	if len(cols) == 0 {
+	// 		c.AbortWithStatus(http.StatusNoContent)
+	// 	}
+	// 	for _, value := range cols {
+	// 		table += "<th class='text-center'>" + value + "</th>"
+	// 	}
+	// 	// once you've added all the columns in, close the header
+	// 	table += "</thead><tbody>"
+	// 	// columns
+	// 	var title string
+	// 	for rows.Next() {
+	// 		rows.Scan(&title) // put columns here prefaced with &
+	// 		table += "<tr><td>" + title + "</td></tr>" // <--- EDIT THIS LINE
+	// 	}
+	// 	// finally, close out the body and table
+	// 	table += "</tbody></table>"
+	// 	c.Data(http.StatusOK, "text/html", []byte(table))
+	// })
+
+	// router.GET("/query3", func(c *gin.Context) {
+	// 	table := "<table class='table'><thead><tr>"
+	// 	// put your query here
+	// 	rows, err := db.Query("SELECT artist.name, COUNT(album.albumId) FROM artist NATURAL JOIN album GROUP BY artist.artistId") // <--- EDIT THIS LINE
+	// 	if err != nil {
+	// 		// careful about returning errors to the user!
+	// 		c.AbortWithError(http.StatusInternalServerError, err)
+	// 	}
+	// 	// foreach loop over rows.Columns, using value
+	// 	cols, _ := rows.Columns()
+	// 	if len(cols) == 0 {
+	// 		c.AbortWithStatus(http.StatusNoContent)
+	// 	}
+	// 	for _, value := range cols {
+	// 		table += "<th class='text-center'>" + value + "</th>"
+	// 	}
+	// 	// once you've added all the columns in, close the header
+	// 	table += "</thead><tbody>"
+	// 	// columns
+	// 	var name string
+	// 	var count int
+	// 	for rows.Next() {
+	// 		rows.Scan(&name, &count) // put columns here prefaced with &
+	// 		table += "<tr><td>" + name + "</td><td>" + strconv.Itoa(count) + "</td></tr>" // <--- EDIT THIS LINE
+	// 	}
+	// 	// finally, close out the body and table
+	// 	table += "</tbody></table>"
+	// 	c.Data(http.StatusOK, "text/html", []byte(table))
+	// })
 
 	// NO code should go after this line. it won't ever reach that point
 	router.Run(":" + port)

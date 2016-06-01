@@ -13,7 +13,22 @@ $(document).ready(function(){
     }, "html")
         .then(() => { // callback function, do not execute until $.get completes
             $("#clickMe").click(function(e){
+                
                 console.log("CLICKED");
+
+                $.get("/edit", function(data){
+
+                    console.log(data.dogName);
+                    document.getElementById('name').value = data.dogName;
+                    document.getElementById('location').value = data.shelterName;
+                    document.getElementById('weight').value = data.weight;
+                    document.getElementById('age').value = data.age;
+                    document.getElementById('breed').value = data.breed;
+                    document.getElementById('license').value = data.petLicense;
+
+                }, "json")
+                
+
              });
         })
 
