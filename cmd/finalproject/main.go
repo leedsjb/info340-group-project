@@ -88,7 +88,7 @@ func main() {
 		// once you've added all the columns in, close the header
 		table += "</thead><tbody>"
 		// declare all your RETURNED columns here
-		var dogName string      // <--- EDIT THESE LINES
+		var dogName string     // <--- EDIT THESE LINES
 		var shelterName string //<--- ^^^^
 		var weight int
 		var age int
@@ -107,7 +107,7 @@ func main() {
 
 	router.GET("/edit", func(c *gin.Context) {
 
-		dog_detail, err := db.Query("SELECT dog.name, shelter.name, dog.weight, dog.age, dog.breed, dog.pet_license FROM dog JOIN shelter ON dog.shelter_id = shelter.id WHERE pet_id = 8")
+		dogDetail, err := db.Query("SELECT dog.name, shelter.name, dog.weight, dog.age, dog.breed, dog.pet_license FROM dog JOIN shelter ON dog.shelter_id = shelter.id WHERE pet_id = 8")
 
 		if err != nil {
 			// careful about returning errors to the user!
@@ -123,27 +123,26 @@ func main() {
 		var weight int
 		var age int
 		var breed string
-		var petLicense int;
+		var petLicense int
 
-		for dog_detail.Next() {
-			dog_detail.Scan(&dogName, &shelterName, &weight, &age, &breed, &petLicense) // put columns here prefaced with &
+		for dogDetail.Next() {
+			dogDetail.Scan(&dogName, &shelterName, &weight, &age, &breed, &petLicense) // put columns here prefaced with &
 		}
 
 		log.Println(dogName, breed)
 
 		c.JSON(http.StatusOK, gin.H{
-			"dogName" : dogName,
-			"shelterName" : shelterName,
-			"weight" : weight,
-			"age" : age,
-			"breed" : breed,
-			"petLicense" : petLicense,
-			})
-
+			"dogName":     dogName,
+			"shelterName": shelterName,
+			"weight":      weight,
+			"age":         age,
+			"breed":       breed,
+			"petLicense":  petLicense,
+		})
 
 	})
 
-	router.GET("/secondQuery", func(c *gin.Context) {
+	router.GET("/query2", func(c *gin.Context) {
 		table := "<table class='table'><thead><tr>"
 		// put your query here
 		rows, err := db.Query("SELECT dog.name, dog.weight, member.first_name, member.last_name" +
@@ -172,9 +171,9 @@ func main() {
 		for rows.Next() {
 			rows.Scan(&dogName, &dogWeight, &rescuerFirstName, &rescuerLastName) // put columns here prefaced with &
 			table += "<tr><td>" + dogName + "</td></tr>" +
-						"<tr><td>" + strconv.Itoa(dogWeight)  + "</td></tr>" +
-						"<tr><td>" + rescuerFirstName + "</td></tr>" +
-						"<tr><td>" + rescuerLastName + "</td></tr>"
+				"<tr><td>" + strconv.Itoa(dogWeight) + "</td></tr>" +
+				"<tr><td>" + rescuerFirstName + "</td></tr>" +
+				"<tr><td>" + rescuerLastName + "</td></tr>"
 		}
 		// finally, close out the body and table
 		table += "</tbody></table>"
