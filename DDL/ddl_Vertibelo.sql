@@ -48,7 +48,7 @@ CREATE TABLE Member (
 
 -- Table: Message
 CREATE TABLE Message (
-    message_id integer NOT NULL CONSTRAINT Message_pk PRIMARY KEY,
+    message_id serial NOT NULL CONSTRAINT Message_pk PRIMARY KEY,
     sender_user_id integer NOT NULL,
     reply_to_message_id integer,
     sent_datetime date NOT NULL,
