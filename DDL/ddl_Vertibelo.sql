@@ -8,10 +8,10 @@ CREATE TABLE Airport (
 
 -- Table: Dog
 CREATE TABLE Dog (
-    pet_id integer NOT NULL CONSTRAINT Dog_pk PRIMARY KEY,
+    pet_id serial NOT NULL CONSTRAINT Dog_pk PRIMARY KEY,
     shelter_id integer NOT NULL,
-    rescuer_id integer NOT NULL,
-    trip_id integer NOT NULL,
+    rescuer_id integer,
+    trip_id integer,
     isLiscensed boolean NOT NULL,
     name varchar(32),
     weight integer,
@@ -118,7 +118,7 @@ CREATE TABLE Shelter (
 
 -- Table: Trip
 CREATE TABLE Trip (
-    id integer NOT NULL CONSTRAINT Trip_pk PRIMARY KEY,
+    id serial NOT NULL CONSTRAINT Trip_pk PRIMARY KEY,
     pilot_id integer NOT NULL,
     distance decimal(5,2) NOT NULL,
     flight_date date NOT NULL,
