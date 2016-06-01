@@ -48,8 +48,8 @@ func main() {
 		c.HTML(http.StatusOK, "pilot_list.html", nil)
 	})
 
-	router.GET("/pilot_edit.html", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "pilot_edit.html", nil)
+	router.GET("/pilot_transport.html", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "pilot_transport.html", nil)
 	})
 
 	router.GET("/rescuer_edit.html", func(c *gin.Context) {
