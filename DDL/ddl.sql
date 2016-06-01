@@ -154,23 +154,17 @@ INSERT INTO message VALUES (DEFAULT, 24, NULL, '2016-05-31', 'Dogs to Transport'
 INSERT INTO message VALUES (DEFAULT, 32, NULL, '2016-05-31', 'Storm over?', 'Is the weather better there yet?');
 --recipient
 --INSERT INTO recipient VALUES (message_id, user_id, message_read, recipient_read_date)
-INSERT INTO recipient VALUES (1, 1, FALSE);
-INSERT INTO recipient VALUES (2, 2, TRUE, 2016-05-30 11:01:59);
-INSERT INTO recipient VALUES (3, 2, FALSE);
-INSERT INTO recipient VALUES (4, 3, FALSE);
-INSERT INTO recipient VALUES (5, 4, FALSE);
-INSERT INTO recipient VALUES (6, 5, FALSE);
-INSERT INTO recipient VALUES (7, 6, TRUE, 2016-05-31 21:11:33);
-INSERT INTO recipient VALUES (8, 6, FALSE);
-INSERT INTO recipient VALUES (9, 7, FALSE);
-INSERT INTO recipient VALUES (10, 8, FALSE);
-INSERT INTO recipient VALUES (11, 9, FALSE);
-INSERT INTO recipient VALUES (12, 10, FALSE);
-INSERT INTO recipient VALUES (13, 11, FALSE);
-INSERT INTO recipient VALUES (14, 12, FALSE);
+INSERT INTO recipient VALUES (1, 22, FALSE, NULL);
+INSERT INTO recipient VALUES (14, 22, TRUE, '2016-05-30');
+INSERT INTO recipient VALUES (15, 22, FALSE, NULL);
+INSERT INTO recipient VALUES (17, 18, FALSE, NULL);
+INSERT INTO recipient VALUES (18, 32, FALSE, NULL);
+INSERT INTO recipient VALUES (19, 30, TRUE, '2016-05-31');
+INSERT INTO recipient VALUES (21, 22, FALSE, NULL);
+INSERT INTO recipient VALUES (22, 33, FALSE, NULL);
+
 
 --plane_pilot
---INSERT INTO plane_pilot VALUES (id, pilot_id, plane_registration);
 INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N307');
 INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N443');
 INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N530');
