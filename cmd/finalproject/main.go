@@ -143,34 +143,43 @@ func main() {
 
 	})
 
-	// router.GET("/query2", func(c *gin.Context) {
-	// 	table := "<table class='table'><thead><tr>"
-	// 	// put your query here
-	// 	rows, err := db.Query("SELECT album.title FROM album WHERE album.cost::numeric > (SELECT AVG(album.cost::numeric) FROM album)") // <--- EDIT THIS LINE
-	// 	if err != nil {
-	// 		// careful about returning errors to the user!
-	// 		c.AbortWithError(http.StatusInternalServerError, err)
-	// 	}
-	// 	// foreach loop over rows.Columns, using value
-	// 	cols, _ := rows.Columns()
-	// 	if len(cols) == 0 {
-	// 		c.AbortWithStatus(http.StatusNoContent)
-	// 	}
-	// 	for _, value := range cols {
-	// 		table += "<th class='text-center'>" + value + "</th>"
-	// 	}
-	// 	// once you've added all the columns in, close the header
-	// 	table += "</thead><tbody>"
-	// 	// columns
-	// 	var title string
-	// 	for rows.Next() {
-	// 		rows.Scan(&title) // put columns here prefaced with &
-	// 		table += "<tr><td>" + title + "</td></tr>" // <--- EDIT THIS LINE
-	// 	}
-	// 	// finally, close out the body and table
-	// 	table += "</tbody></table>"
-	// 	c.Data(http.StatusOK, "text/html", []byte(table))
-	// })
+	router.GET("/query2", func(c *gin.Context) {
+		table := "<table class='table'><thead><tr>"
+		// put your query here
+		rows, err := db.Query("SELECT dog.name, dog.weight, member.first_name, member.last_name" +
+			" FROM dog JOIN rescuer ON dog.rescuer_id = rescuer.member_id" +
+			" JOIN member ON rescuer.member_id = member.id;") // <--- EDIT THIS LINE
+		if err != nil {
+			// careful about returning errors to the user!
+			c.AbortWithError(http.StatusInternalServerError, err)
+		}
+		// foreach loop over rows.Columns, using value
+		cols, _ := rows.Columns()
+		if len(cols) == 0 {
+			c.AbortWithStatus(http.StatusNoContent)
+		}
+		for _, value := range cols {
+			table += "<th class='text-center'>" + value + "</th>"
+		}
+		// once you've added all the columns in, close the header
+		table += "</thead><tbody>"
+		// columns
+		var dogName string
+		var dogWeight int
+		var rescuerFirstName string
+		var rescuerLastName string
+
+		for rows.Next() {
+			rows.Scan(&dogName, &dogWeight, &rescuerFirstName, &rescuerLastName) // put columns here prefaced with &
+			table += "<tr><td>" + dogName + "</td></tr>" +
+						"<tr><td>" + strconv.Itoa(dogWeight)  + "</td></tr>" +
+						"<tr><td>" + rescuerFirstName + "</td></tr>" +
+						"<tr><td>" + rescuerLastName + "</td></tr>"
+		}
+		// finally, close out the body and table
+		table += "</tbody></table>"
+		c.Data(http.StatusOK, "text/html", []byte(table))
+	})
 
 	// router.GET("/query3", func(c *gin.Context) {
 	// 	table := "<table class='table'><thead><tr>"

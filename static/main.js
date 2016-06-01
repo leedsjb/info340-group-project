@@ -13,7 +13,7 @@ $(document).ready(function(){
     }, "html")
         .then(() => { // callback function, do not execute until $.get completes
             $("#clickMe").click(function(e){
-                
+
                 console.log("CLICKED");
 
                 $.get("/edit", function(data){
@@ -27,7 +27,7 @@ $(document).ready(function(){
                     document.getElementById('license').value = data.petLicense;
 
                 }, "json")
-                
+
 
              });
         })
@@ -40,5 +40,3 @@ $(document).ready(function(){
         $("#thirdQuery").append(data);
     }, "html")
 });
-
-
