@@ -143,7 +143,7 @@ func main() {
 
 	})
 
-	router.GET("/query2", func(c *gin.Context) {
+	router.GET("/secondQuery", func(c *gin.Context) {
 		table := "<table class='table'><thead><tr>"
 		// put your query here
 		rows, err := db.Query("SELECT dog.name, dog.weight, member.first_name, member.last_name" +
