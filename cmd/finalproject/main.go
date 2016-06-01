@@ -44,9 +44,14 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
-	router.GET("/pilot.html", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "pilot.html", nil)
+	router.GET("/pilot_search.html", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "pilot_search.html", nil)
 	})
+
+	router.GET("/pilot_transport.html", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "pilot_transport.html", nil)
+	})
+
 	router.GET("/rescuer_edit.html", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "rescuer_edit.html", nil)
 	})

@@ -142,40 +142,29 @@ INSERT INTO shelter VALUES (DEFAULT, 33, 'Lewis County Animal Shelter');
 
 --message
 --INSERT INTO message VALUES (message_id, sender_user_id, reply_to_message_id[N], sent_datetime, title, message_text);
-INSERT INTO message VALUES (DEFAULT, 1, 2016-05-29 12:23:24, 'Biscuit from Seattle', 'Thank you so much for offering to fly our dog Biscuit to a no-kill shelter!');
-INSERT INTO message VALUES (DEFAULT, 2, 2016-05-29 10:16:23, 'Availability for transport', 'Will you still be able to make it this week?');
-INSERT INTO message VALUES (DEFAULT, 2, 2, 2016-05-30 12:55:11, 'Availability for transport', 'That''s great to hear! Thank you!');
-INSERT INTO message VALUES (DEFAULT, 3, 2016-05-30 13:14:08, 'Picking up Oscar', 'Thank you so much for being able to pick him up such last minute');
-INSERT INTO message VALUES (DEFAULT, 4, 2016-05-30 08:08:19, 'Bad Weather', 'Will you still be able to make it tomorrow? The weather report shows a strong storm rolling in');
-INSERT INTO message VALUES (DEFAULT, 5, 2016-05-30 15:20:12, 'Heavy winds an issue?', 'There''s supposed to be 70mph winds tomorrow, can you still make it?');
-INSERT INTO message VALUES (DEFAULT, 6, 2016-05-31 20:49:29, 'Pickin up from Seattle', 'How long will you be in the area for?');
-INSERT INTO message VALUES (DEFAULT, 6, 8, 2016-05-31 21:45:11, 'Picking up from Seattle', 'I''ll be around for about a week');
-INSERT INTO message VALUES (DEFAULT, 7, 2016-05-31 07:05:23, 'Number of dogs to transport', 'I can transport 3-5 depending on their weight');
-INSERT INTO message VALUES (DEFAULT, 8, 2016-05-31 21:22:56, 'Storm over?', 'Is the weather better there yet?');
-INSERT INTO message VALUES (DEFAULT, 9, 2016-05-31 15:23:43, 'Transport availability', 'Are you still able to fly into town this week?');
-INSERT INTO message VALUES (DEFAULT, 10, 2016-05-31 23:35:12, 'Post-rescue questions', 'Is Wawa still stressed out from the flight back?');
-INSERT INTO message VALUES (DEFAULT, 11, 2016-05-31 16:45:23, 'Flight cancellation', 'I unfortunately won''t be able to help out this Friday on transporting Winston to Seattle');
-INSERT INTO message VALUES (DEFAULT, 12, 2016-05-31 06:34:55, 'Nearby shelters', 'Do you know of any shleters in the area that also have animals that could be picked up? I have the extra space');
-
+INSERT INTO message VALUES (DEFAULT, 20, NULL, '2016-05-29', 'Biscuit from Seattle', 'Thank you so much for offering to fly our dog Biscuit to a no-kill shelter!');
+INSERT INTO message VALUES (DEFAULT, 18, NULL, '2016-05-29', 'Transport?', 'Will you still be able to make it this week?');
+INSERT INTO message VALUES (DEFAULT, 18, 2, '2016-05-30', 'Transport?', 'That''s great to hear! Thank you!');
+INSERT INTO message VALUES (DEFAULT, 24, NULL, '2016-05-30', 'Picking up Oscar', 'Thank you so much for being able to pick him up such last minute');
+INSERT INTO message VALUES (DEFAULT, 22, NULL, '2016-05-30', 'Bad Weather', 'Will you still be able to make it tomorrow? The weather report shows a strong storm rolling in');
+INSERT INTO message VALUES (DEFAULT, 19, NULL, '2016-05-30', 'Heavy winds an issue?', 'There''s supposed to be 70mph winds tomorrow, can you still make it?');
+INSERT INTO message VALUES (DEFAULT, 22, NULL, '2016-05-31', 'Seattle pickup', 'How long will you be in the area for?');
+INSERT INTO message VALUES (DEFAULT, 33, 8, '2016-05-31', 'Seattle pickup', 'I''ll be around for about a week');
+INSERT INTO message VALUES (DEFAULT, 24, NULL, '2016-05-31', 'Dogs to Transport', 'I can transport 3-5 depending on their weight');
+INSERT INTO message VALUES (DEFAULT, 32, NULL, '2016-05-31', 'Storm over?', 'Is the weather better there yet?');
 --recipient
 --INSERT INTO recipient VALUES (message_id, user_id, message_read, recipient_read_date)
-INSERT INTO recipient VALUES (1, 1, FALSE);
-INSERT INTO recipient VALUES (2, 2, TRUE, 2016-05-30 11:01:59);
-INSERT INTO recipient VALUES (3, 2, FALSE);
-INSERT INTO recipient VALUES (4, 3, FALSE);
-INSERT INTO recipient VALUES (5, 4, FALSE);
-INSERT INTO recipient VALUES (6, 5, FALSE);
-INSERT INTO recipient VALUES (7, 6, TRUE, 2016-05-31 21:11:33);
-INSERT INTO recipient VALUES (8, 6, FALSE);
-INSERT INTO recipient VALUES (9, 7, FALSE);
-INSERT INTO recipient VALUES (10, 8, FALSE);
-INSERT INTO recipient VALUES (11, 9, FALSE);
-INSERT INTO recipient VALUES (12, 10, FALSE);
-INSERT INTO recipient VALUES (13, 11, FALSE);
-INSERT INTO recipient VALUES (14, 12, FALSE);
+INSERT INTO recipient VALUES (1, 22, FALSE, NULL);
+INSERT INTO recipient VALUES (14, 22, TRUE, '2016-05-30');
+INSERT INTO recipient VALUES (15, 22, FALSE, NULL);
+INSERT INTO recipient VALUES (17, 18, FALSE, NULL);
+INSERT INTO recipient VALUES (18, 32, FALSE, NULL);
+INSERT INTO recipient VALUES (19, 30, TRUE, '2016-05-31');
+INSERT INTO recipient VALUES (21, 22, FALSE, NULL);
+INSERT INTO recipient VALUES (22, 33, FALSE, NULL);
+
 
 --plane_pilot
---INSERT INTO plane_pilot VALUES (id, pilot_id, plane_registration);
 INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N307');
 INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N443');
 INSERT INTO plane_pilot VALUES (DEFAULT, 6, 'N530');
