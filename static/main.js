@@ -12,7 +12,7 @@ $(document).ready(function(){
         $("#firstQuery").append(data);
     }, "html")
         .then(() => { // callback function, do not execute until $.get completes
-            $("#clickMe").click(function(e){
+            $(".btn").click(function(e){
 
                 console.log("CLICKED");
 
