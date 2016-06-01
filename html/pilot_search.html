@@ -7,41 +7,41 @@
         <link rel="stylesheet" href="static/main.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
         <script src="static/pilot.js"></script>
+        <script src="static/main.js"></script>
     </head>
 
     <body>
         <div class="container">
             <div class="row">
-                <div class="pilotForm is-Responsive">
-                        <h1>Find a Dog to Transport</h1>
+                <div class="pilotForm col-md-5">
+                    <h1>Find a Dog to Transport</h1>
+                    <!-- <form role="form" class="fillForm"> -->
+                    <div class="form-group">
+                        <label for="location">Zip Code:</label>
+                        <input type="number" pattern='[0-9]{5}' class="form-control" id="location">
+                    </div>
+                    <div class="form-group">
+                        <label for="distance">Distance:</label>
+                        <select class="form-control" id="distance">
+                            <option>--Distance from
+                                Location in Miles--</option>
+                            <option>10</option>
+                            <option>20</option>
+                            <option>30</option>
+                            <option>40</option>
+                            <option>50</option>
+                        </select>
+                    </div>
 
-                        <!-- <form role="form" class="fillForm"> -->
-                            <div class="form-group">
-                                <label for="location">Zip Code:</label>
-                                <input type="number" pattern='[0-9]{5}' class="form-control" id="location">
-                            </div>
-                           <div class="form-group">
-                              <label for="distance">Distance:</label>
-                                 <select class="form-control" id="distance">
-                                       <option>--Distance from
-                                          Location in Miles--</option>
-                                        <option>10</option>
-                                        <option>20</option>
-                                        <option>30</option>
-                                        <option>40</option>
-                                        <option>50</option>
-                                 </select>
-                           </div>
+                    <button type="submit" class="btn btn-primary" id="show">Submit</button>
+                    <!-- </form> -->
+                </div>
+                <div class="col-md-7" id="secondQuery">
+                    <h1>Dogs  Ready for Transport</h1>
 
-
-                            <button type="submit" class="btn btn-primary" id="show">Submit</button>
-                        <!-- </form> -->
                 </div>
             </div>
         </div>
-            <div class="col-md-8" id="secondQuery">
-               <h1>Dogs  Ready for Transport</h1>
-
-            </div>
+            
     </body>
 </html>
