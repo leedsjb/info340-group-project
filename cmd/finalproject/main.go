@@ -170,10 +170,10 @@ func main() {
 
 		for rows.Next() {
 			rows.Scan(&dogName, &dogWeight, &rescuerFirstName, &rescuerLastName) // put columns here prefaced with &
-			table += "<tr><td>" + dogName + "</td>"
-			"<td>" + strconv.Itoa(dogWeight) + "</td>"
-			"<td>" + rescuerFirstName + "</td>"
-			"<td>" + rescuerLastName + "</td></tr>"
+			table += "<tr><td>" + dogName + "</td>" +
+				"<td>" + strconv.Itoa(dogWeight) + "</td>" +
+				"<td>" + rescuerFirstName + "</td>" +
+				"<td>" + rescuerLastName + "</td></tr>"
 		}
 		// finally, close out the body and table
 		table += "</tbody></table>"
