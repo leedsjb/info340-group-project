@@ -72,7 +72,7 @@ func main() {
 	router.GET("/query1", func(c *gin.Context) {
 		table := "<table class='table'><thead><tr>"
 		// put your query here
-		rows, err := db.Query("SELECT dog.name, shelter.name, weight, age, breed FROM dog JOIN shelter ON shelter.id = dog.shelter_id") // <--- EDIT THIS LINE
+		rows, err := db.Query("SELECT dog.pet_id, dog.name, shelter.name, weight, age, breed FROM dog JOIN shelter ON shelter.id = dog.shelter_id") // <--- EDIT THIS LINE
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
@@ -88,6 +88,7 @@ func main() {
 		// once you've added all the columns in, close the header
 		table += "</thead><tbody>"
 		// declare all your RETURNED columns here
+		var petId int
 		var dogName string     // <--- EDIT THESE LINES
 		var shelterName string //<--- ^^^^
 		var weight int
@@ -96,9 +97,9 @@ func main() {
 		for rows.Next() {
 			// assign each of them, in order, to the parameters of rows.Scan.
 			// preface each variable with &
-			rows.Scan(&dogName, &shelterName, &weight, &age, &breed) // <--- EDIT THIS LINE
+			rows.Scan(&petId, &dogName, &shelterName, &weight, &age, &breed) // <--- EDIT THIS LINE
 			// can't combine ints and strings in Go. Use strconv.Itoa(int) instead
-			table += "<tr><td>" + dogName + "</td><td>" + shelterName + "</td><td>" + strconv.Itoa(weight) + "</td><td>" + strconv.Itoa(age) + "</td><td>" + breed + "</td><td><button type='button' id='clickMe' class='btn btn-primary'>Edit</button></td></tr>"
+			table += "<tr><td>" + strconv.Itoa(petId) + "</td><td>" + dogName + "</td><td>" + shelterName + "</td><td>" + strconv.Itoa(weight) + "</td><td>" + strconv.Itoa(age) + "</td><td>" + breed + "</td><td><button type='button' id='" + strconv.Itoa(petId) + "' class='btn btn-primary'>Edit</button></td></tr>"
 		}
 		// finally, close out the body and table
 		table += "</tbody></table>"
