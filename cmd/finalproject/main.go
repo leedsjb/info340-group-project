@@ -311,8 +311,9 @@ router.GET("/EXAMPLE", func(c *gin.Context) {
     // look at https://godoc.org/github.com/gin-gonic/gin to find other return types. JSON will be the most useful for this
 })
 
-*/
 SELECT dog.name, dog.weight, member.first_name, member.last_name FROM dog
 JOIN Rescuer ON dog.rescuer_id = rescuer.member_id
 JOIN Member ON rescuer.member_id = member.id
 JOIN Location ON member.location_id = location.id
+
+*/

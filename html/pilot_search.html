@@ -18,13 +18,12 @@
                     <!-- <form role="form" class="fillForm"> -->
                     <div class="form-group">
                         <label for="location">Zip Code:</label>
-                        <input type="number" type="submit" pattern='[0-9]{5}' class="form-control" id="zipcode">
+                        <input type="number" type="input" pattern='[0-9]{5}' class="form-control" id="zipcode">
                     </div>
                     <div class="form-group">
                         <label for="distance">Distance:</label>
                         <select class="form-control" id="distance">
-                            <option value = "">--Distance from
-                                Location in Miles--</option>
+                            <option value = "">--Distance from Location in Miles--</option>
                             <option>10</option>
                             <option>20</option>
                             <option>30</option>
@@ -33,7 +32,10 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" id="show">Submit</button>
+                    
+                   <!-- change type from submit to button to prevent page reload --> 
+                    <button type="button" id="show" class="btn btn-primary">Submit</button>
+
                     <!-- </form> -->
                 </div>
                 <div class="col-md-7" id="secondQuery">

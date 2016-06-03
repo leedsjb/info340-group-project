@@ -23,7 +23,7 @@ $(document).ready(function(){
             +'<td>'+item.weight+'</td>'
             +'<td>'+item.age+'</td>'
             +'<td>'+item.breed+'</td>'
-            +'<td><button id="'+item.petId+'" class="btn btn-primary">Edit</button></td>'
+            +'<td><button id="'+item.petId+'" class="btn btn-primary edit">Edit</button></td>'
             +'</tr>';
             $('#firstQuery').append(row);
         })
@@ -31,7 +31,7 @@ $(document).ready(function(){
         $('#firstQuery').append("</tbody>");
 
     }).then(function(data) {
-        $(".btn").click(function(e){
+        $(".edit").click(function(e){
 
             btnId = $(this).attr('id'); // GLOBAL VARIABLE
             console.log("BtnId =" + btnId);
@@ -101,25 +101,63 @@ $(document).ready(function(){
 
     };
 
+    // $(document).ready(function(){
+        $("#show").click(function() {  // "Find a Dog" submit button event handler
+            
+            var params = {
+                zipcode: $("#zipcode").val(),
+                distance: $("#distance").val(),
+            }
+
+            console.log(params)
+
+            callGo2(params); // call query2 in main.go, pass params from form fields
+
+            
+
+        });
+    // });
 
 
 
-
-
-
-
-
-    $.get("/location", function(data){
+    // $.get("/location", function(data){
          //   .then(() => {
          //
          //  })
-     })
+     // })
 
-    $.get("/query2", function(data){
-        $("#secondQuery").append(data);
-    }, "html")
 
-    // $.get("/query3", function(data){
-    //     $("#thirdQuery").append(data);
-    // }, "html")
+    function callGo2(params){
+
+        $.get("/query2", function(data){
+            $("#secondQuery").append(data);
+        }, "html")
+
+
+
+        // .then(
+        //     $("#secondQuery").toggle(); // display results
+        // )
+
+    };
+
+// end of $(document).ready()
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
