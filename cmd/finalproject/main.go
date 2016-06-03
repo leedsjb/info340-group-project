@@ -81,6 +81,7 @@ func main() {
 		c.JSON(200, context)
 	})
 
+	/* Check connection to database */
 	router.GET("/ping", func(c *gin.Context) {
 		ping := db.Ping()
 		if ping != nil {
@@ -92,9 +93,10 @@ func main() {
 	})
 
 	router.GET("/query1", func(c *gin.Context) {
+		
 		var pets []petInfo
-
 		rows, err := db.Query("SELECT dog.pet_id, dog.name, shelter.name, weight, age, breed, pet_license FROM dog JOIN shelter ON shelter.id = dog.shelter_id") // <--- EDIT THIS LINE
+		
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
@@ -181,6 +183,42 @@ func main() {
 		table += "</tbody></table>"
 		c.Data(http.StatusOK, "text/html", []byte(table))
 	})
+
+	router.POST("/dog-edit", func(c *gin.Context) {
+		log.Println("dog-edit in Go called! *!*")
+
+		name := c.PostForm("name")
+		location := c.PostForm("location")
+		weight := c.PostForm("weight")
+		age := c.PostForm("age")
+		breed := c.PostForm("breed")
+		license := c.PostForm("license")
+		pet_id := c.PostForm("pet_id")
+
+		log.Println(name, location, weight, age, breed, license, pet_id)
+
+		rows, err := db.Query("UPDATE dog SET name = $1, weight = $2, age = $3, breed = $4, pet_license = $5 WHERE dog.pet_id = $6;", name, weight, age, breed, license, pet_id)
+		
+		/* 
+		Query for testing in terminal:
+		UPDATE dog SET dog.name = 'Riley', dog.weight = '10', dog.age = '10', dog.breed = 'Labrador;, dog.pet_license = '10' WHERE dog.pet_id = 8;
+		*/
+
+		// ensure no errors were returned
+		if err != nil {
+			c.AbortWithError(http.StatusInternalServerError, err)
+			return
+		}
+
+		// ensure some content was returned
+		cols, _ := rows.Columns()
+		if len(cols) == 0 {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
+
+	})
+
 	router.Run(":" + port)
 }
 

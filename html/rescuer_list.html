@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="utf-8">
         <title>Lab 6 + 7</title>
@@ -8,11 +9,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
         <script src="static/main.js"></script>
     </head>
+
     <body>
-
-
-
-         <div class="container">
+        <div class="container">
             <div class="row">
                 <!-- <div class="pilotForm is-Responsive">
                     <h1>Dogs for Transport</h1>
@@ -20,7 +19,8 @@
                 <div class="col-md-8">
                     <h1>Dogs for Transport</h1>
                     <!-- <table id="firstQuery"> -->
-                    <table id="firstQuery" class='table'><thead><tr>
+                    <table id="firstQuery" class='table'>
+                        <!-- <thead><tr> -->
                     </table>
                 </div>  
                 <!-- Editing Form -->
@@ -51,7 +51,7 @@
                             <label for="license">Pet License:</label>
                             <input type="input" class="form-control" id="license">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" id="dog-edit-submit" class="btn btn-primary">Submit</button> <!-- type="button" instead of "submit" prevents refresh when clicked -->
                     </form>     
                 </div>
 
