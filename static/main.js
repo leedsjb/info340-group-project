@@ -97,9 +97,9 @@ $(document).ready(function(){
             //     console.log(data)
             //     $("#result"+index).text("Logged in as: " + data.username + (data.randomCode ? " (CODE: " + data.randomCode + ")" : ""));
             // }
-        });
+        }.then(location.reload()));
 
-    }
+    };
 
 
 
