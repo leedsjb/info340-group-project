@@ -41,8 +41,3 @@ $(document).ready(function(){
     $.get("/query2", function(data){
         $("#secondQuery").append(data);
     }, "html")
-
-    $.get("/query3", function(data){
-        $("#thirdQuery").append(data);
-    }, "html")
-});
