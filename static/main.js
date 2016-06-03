@@ -62,9 +62,47 @@ $(document).ready(function(){
 
     // event listener for dog edit form submit button
     $("#dog-edit-submit").click(function(){
-      // login(3);
+      
       console.log("***!***");
+
+      // build struct from updates made to form
+      var formfields = {
+        name: $("#name").val(),
+        location: $("#location").val(),
+        weight: $("#weight").val(),
+        age: $("#age").val(),
+        breed: $("#breed").val(),
+        license: $("#license").val(),
+      }
+
+      console.log(formfields);
+      callGo(formfields);
+
     });
+
+
+    function callGo(formfields){
+
+      $.post("/dog-edit", formfields)
+        .done(function(data){
+            // if(data.result == "failed"){
+            //     console.log(data)
+            //     $("#result"+index).text("Failed to login! " + data.message);
+            // } else {
+            //     console.log(data)
+            //     $("#result"+index).text("Logged in as: " + data.username + (data.randomCode ? " (CODE: " + data.randomCode + ")" : ""));
+            // }
+        });
+
+    }
+
+
+
+
+
+      
+
+    
 
     $.get("/location", function(data){
          //   .then(() => {

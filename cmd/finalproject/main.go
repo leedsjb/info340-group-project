@@ -183,6 +183,11 @@ func main() {
 		table += "</tbody></table>"
 		c.Data(http.StatusOK, "text/html", []byte(table))
 	})
+
+	router.POST("/dog-edit", func(c *gin.Context) {
+		log.Println("dog-edit in Go called! *!*")
+	})
+
 	router.Run(":" + port)
 }
 
