@@ -9,28 +9,63 @@ $(document).ready(function(){
     }, "json")
 
     $.get("/query1", function(data){
-        $("#firstQuery").append(data);
-    }, "html")
-        .then(() => { // callback function, do not execute until $.get completes
-            $(".btn").click(function(e){
 
-                console.log("CLICKED");
+            // TABLE STUFF
+            // $('#firstQuery').append('<thead><th>Pet ID</th></thead>');
+            $('#firstQuery').append("<th class='text-center'>Name</th><th class='text-center'>Shelter</th>" +
+                "<th class='text-center'>Weight</th><th class='text-center'>Age</th><th class='text-center'>Breed</th></thead>");
+            $('#firstQuery').append("<tbody>");
 
-                $.get("/edit", function(data){
+            $.each(data.pets, function(i, item) {
+                // var row = '<tr><td>'+item.petId+'</td>'
+                    var row = '<tr><td>'+item.dogName+'</td>'
+                    +'<td>'+item.shelterName+'</td>'
+                    +'<td>'+item.weight+'</td>'
+                    +'<td>'+item.age+'</td>'
+                    +'<td>'+item.breed+'</td>'
+                    +'<td><button id="'+item.petId+'" class="btn btn-primary">Edit</button></td>'
+                    +'</tr>';
+                $('#firstQuery').append(row);
+            })
 
-                    console.log(data.dogName);
-                    document.getElementById('name').value = data.dogName;
-                    document.getElementById('location').value = data.shelterName;
-                    document.getElementById('weight').value = data.weight;
-                    document.getElementById('age').value = data.age;
-                    document.getElementById('breed').value = data.breed;
-                    document.getElementById('license').value = data.petLicense;
+            $('#firstQuery').append("</tbody>");
 
-                }, "json")
+            }).then(function(data) {
+                $(".btn").click(function(e){
+
+                    var btnId = $(this).attr('id');
+                    console.log("BtnId =" + btnId);
+
+                    var fillForm = function(data) {
+                        console.log(data);
+                        for (var i = 0; i < data.pets.length; i++) {
+                            if (data.pets[i].petId == btnId) {
+                                console.log(data.pets[i]);
+                                document.getElementById('name').value = data.pets[i].dogName;
+                                document.getElementById('location').value = data.pets[i].shelterName;
+                                document.getElementById('weight').value = data.pets[i].weight;
+                                document.getElementById('age').value = data.pets[i].age;
+                                document.getElementById('breed').value = data.pets[i].breed;
+                                document.getElementById('license').value = data.pets[i].petLicense;
+                            }
+
+                        }
+                    };
+
+                    fillForm(data);
+
+                    var handleClicks = function(e) {
+
+                      $.get("/edit?buttonId=" + btnId, fillForm, "json");
+                    }
+
+                    $('btn').click(handleClicks)
 
 
-             });
-        })
+                                    });
+                    }, "json")
+
+
 
         $.get("/location", function(data){
          //   .then(() => {
@@ -41,3 +76,6 @@ $(document).ready(function(){
     $.get("/query2", function(data){
         $("#secondQuery").append(data);
     }, "html")
+    
+//Removed the query 3
+});
