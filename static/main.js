@@ -32,6 +32,12 @@ $(document).ready(function(){
              });
         })
 
+        $.get("/location", function(data){
+         //   .then(() => {
+         //
+         //  })
+        })
+
     $.get("/query2", function(data){
         $("#secondQuery").append(data);
     }, "html")
