@@ -8,6 +8,8 @@ $(document).ready(function(){
         }
     }, "json")
 
+    var btnId;
+
     $.get("/query1", function(data){
 
         $('#firstQuery').append("<thead><tr><th>Name</th><th>Shelter</th>" +
@@ -31,15 +33,16 @@ $(document).ready(function(){
     }).then(function(data) {
         $(".btn").click(function(e){
 
-            var btnId = $(this).attr('id');
+            btnId = $(this).attr('id'); // GLOBAL VARIABLE
             console.log("BtnId =" + btnId);
 
+            // define function to fill form
             var fillForm = function(data) {
                 console.log(data);
-                for (var i = 0; i < data.pets.length; i++) {
-                    if (data.pets[i].petId == btnId) {
+                for (var i = 0; i < data.pets.length; i++) { // loop over each pet retrieved from the DB
+                    if (data.pets[i].petId == btnId) { // look for the petId matching the edit button that was clicked
                         console.log(data.pets[i]);
-                        document.getElementById('name').value = data.pets[i].dogName;
+                        document.getElementById('name').value = data.pets[i].dogName; // fill the corresponding form field
                         document.getElementById('location').value = data.pets[i].shelterName;
                         document.getElementById('weight').value = data.pets[i].weight;
                         document.getElementById('age').value = data.pets[i].age;
@@ -49,7 +52,7 @@ $(document).ready(function(){
                 }
             };
 
-            fillForm(data);
+            fillForm(data); 
 
             var handleClicks = function(e) {
                 $.get("/edit?buttonId=" + btnId, fillForm, "json");
@@ -64,6 +67,7 @@ $(document).ready(function(){
     $("#dog-edit-submit").click(function(){
       
       console.log("***!***");
+      console.log(btnId);
 
       // build struct from updates made to form
       var formfields = {
@@ -73,6 +77,7 @@ $(document).ready(function(){
         age: $("#age").val(),
         breed: $("#breed").val(),
         license: $("#license").val(),
+        pet_id: btnId,
       }
 
       console.log(formfields);
