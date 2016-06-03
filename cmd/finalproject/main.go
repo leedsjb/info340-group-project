@@ -6,6 +6,9 @@ package main
 import (
 	// this is Go's built-in sql library
 	"database/sql"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -60,15 +63,22 @@ func main() {
 		c.HTML(http.StatusOK, "pilot_search.html", nil)
 	})
 
-	router.GET("/pilot_transport.html", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "pilot_transport.html", nil)
-	})
-
 	router.GET("/rescuer_edit.html", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "rescuer_edit.html", nil)
 	})
+
 	router.GET("/rescuer_list.html", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "rescuer_list.html", nil)
+	})
+
+	router.GET("/location", func(c *gin.Context) {
+		current := geocode(c.Param("location")) // came from the GET request
+		context := struct {
+			Current Coordinate
+		}{
+			current,
+		}
+		c.JSON(200, context)
 	})
 
 	router.GET("/ping", func(c *gin.Context) {
@@ -162,49 +172,88 @@ func main() {
 
 		for rows.Next() {
 			rows.Scan(&dogName, &dogWeight, &rescuerFirstName, &rescuerLastName) // put columns here prefaced with &
-			table +=
-				"<tr><td>" + dogName +
-					strconv.Itoa(dogWeight) +
-					rescuerFirstName +
-					rescuerLastName + "</td></tr>"
+			table += "<tr><td>" + dogName + "</td>" +
+				"<td>" + strconv.Itoa(dogWeight) + "</td>" +
+				"<td>" + rescuerFirstName + "</td>" +
+				"<td>" + rescuerLastName + "</td></tr>"
 		}
 		// finally, close out the body and table
 		table += "</tbody></table>"
 		c.Data(http.StatusOK, "text/html", []byte(table))
 	})
-
-	// router.GET("/query3", func(c *gin.Context) {
-	// 	table := "<table class='table'><thead><tr>"
-	// 	// put your query here
-	// 	rows, err := db.Query("SELECT artist.name, COUNT(album.albumId) FROM artist NATURAL JOIN album GROUP BY artist.artistId") // <--- EDIT THIS LINE
-	// 	if err != nil {
-	// 		// careful about returning errors to the user!
-	// 		c.AbortWithError(http.StatusInternalServerError, err)
-	// 	}
-	// 	// foreach loop over rows.Columns, using value
-	// 	cols, _ := rows.Columns()
-	// 	if len(cols) == 0 {
-	// 		c.AbortWithStatus(http.StatusNoContent)
-	// 	}
-	// 	for _, value := range cols {
-	// 		table += "<th class='text-center'>" + value + "</th>"
-	// 	}
-	// 	// once you've added all the columns in, close the header
-	// 	table += "</thead><tbody>"
-	// 	// columns
-	// 	var name string
-	// 	var count int
-	// 	for rows.Next() {
-	// 		rows.Scan(&name, &count) // put columns here prefaced with &
-	// 		table += "<tr><td>" + name + "</td><td>" + strconv.Itoa(count) + "</td></tr>" // <--- EDIT THIS LINE
-	// 	}
-	// 	// finally, close out the body and table
-	// 	table += "</tbody></table>"
-	// 	c.Data(http.StatusOK, "text/html", []byte(table))
-	// })
-
-	// NO code should go after this line. it won't ever reach that point
 	router.Run(":" + port)
+}
+
+// BingMapResponse represents the internal structure for API responses, omitting data that we aren't using right now
+type BingMapResponse struct {
+	ResourceSets []struct {
+		Resources []struct {
+			Point struct {
+				Type        string        `json:"type"`
+				Coordinates []json.Number `json:"coordinates"`
+			} `json:"point"`
+		} `json:"resources"`
+	} `json:"resourceSets"`
+	statusCode uint16
+}
+
+// Coordinate stores coordinates as numeric strings
+type Coordinate struct {
+	Latitude  string
+	Longitude string
+}
+
+// data will carry a pointer to a custom type (struct) that determines how to parse the JSON
+func getJSON(url string, data interface{}) error {
+	// prepare the new request
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return err
+	}
+
+	// make the request and store the response
+	client := &http.Client{}
+	rsp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	// retrieve the body of the response as a raw byte array
+	defer rsp.Body.Close()
+	body, err := ioutil.ReadAll(rsp.Body)
+	if err != nil {
+		return err
+	}
+
+	// TODO: Test for empty response
+
+	// Parse the JSON response
+	json.Unmarshal(body, &data)
+	if err != nil {
+		return err
+	}
+
+	// we succeeded
+	return nil
+}
+
+func geocode(loc string) Coordinate {
+	// Storage for API response (make sure that $BING_KEY is set)
+	var data BingMapResponse
+	url := fmt.Sprintf("http://dev.virtualearth.net/REST/v1/Locations/%s?maxResults=1&key=%s",
+		loc, os.Getenv("API_KEY"))
+
+	// Call the BING API and store JSON
+	err := getJSON(url, &data)
+	if err != nil {
+		panic(err)
+	}
+
+	point := data.ResourceSets[0].Resources[0].Point
+	location := Coordinate{Latitude: point.Coordinates[0].String(), Longitude: point.Coordinates[1].String()}
+
+	return location
+
 }
 
 /*
