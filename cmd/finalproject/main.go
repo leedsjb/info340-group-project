@@ -95,8 +95,7 @@ func main() {
 	router.GET("/query1", func(c *gin.Context) {
 		
 		var pets []petInfo
-		rows, err := db.Query("SELECT dog.pet_id, dog.name, shelter.name, weight, age, breed, pet_license FROM dog JOIN shelter ON shelter.id = dog.shelter_id") // <--- EDIT THIS LINE
-		
+		rows, err := db.Query("SELECT dog.pet_id, dog.name, shelter.name, weight, age, breed, pet_license FROM dog JOIN shelter ON shelter.id = dog.shelter_id")
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
