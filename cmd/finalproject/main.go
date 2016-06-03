@@ -17,11 +17,23 @@ import (
 	_ "github.com/lib/pq"
 )
 
+type petInfo struct {
+	PetId int `json:"petId"`
+	DogName string `json:"dogName"`  
+	ShelterName string `json:"shelterName"`  
+	Weight int `json:"weight"`  
+	Age int `json:"age"`  
+	Breed string `json:"breed"`
+	PetLicense int `json:"petLicense"`
+}
+
 var (
 	// this is the pointer to the database we will be working with
 	// this is a "global" variable (sorta kinda, but you can use it as such)
 	db *sql.DB
 )
+
+var buttonId int = -1
 
 func main() {
 	port := os.Getenv("PORT")
@@ -70,45 +82,38 @@ func main() {
 	})
 
 	router.GET("/query1", func(c *gin.Context) {
-		table := "<table class='table'><thead><tr>"
-		// put your query here
-		rows, err := db.Query("SELECT dog.pet_id, dog.name, shelter.name, weight, age, breed FROM dog JOIN shelter ON shelter.id = dog.shelter_id") // <--- EDIT THIS LINE
+		var pets []petInfo
+
+		rows, err := db.Query("SELECT dog.pet_id, dog.name, shelter.name, weight, age, breed, pet_license FROM dog JOIN shelter ON shelter.id = dog.shelter_id") // <--- EDIT THIS LINE
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
 		}
-		// foreach loop over rows.Columns, using value
-		cols, _ := rows.Columns()
-		if len(cols) == 0 {
-			c.AbortWithStatus(http.StatusNoContent)
-		}
-		for _, value := range cols {
-			table += "<th class='text-center'>" + value + "</th>"
-		}
-		// once you've added all the columns in, close the header
-		table += "</thead><tbody>"
-		// declare all your RETURNED columns here
-		var petId int
-		var dogName string     // <--- EDIT THESE LINES
-		var shelterName string //<--- ^^^^
-		var weight int
-		var age int
-		var breed string
+
 		for rows.Next() {
-			// assign each of them, in order, to the parameters of rows.Scan.
-			// preface each variable with &
-			rows.Scan(&petId, &dogName, &shelterName, &weight, &age, &breed) // <--- EDIT THIS LINE
-			// can't combine ints and strings in Go. Use strconv.Itoa(int) instead
-			table += "<tr><td>" + strconv.Itoa(petId) + "</td><td>" + dogName + "</td><td>" + shelterName + "</td><td>" + strconv.Itoa(weight) + "</td><td>" + strconv.Itoa(age) + "</td><td>" + breed + "</td><td><button type='button' id='" + strconv.Itoa(petId) + "' class='btn btn-primary'>Edit</button></td></tr>"
+			var pet petInfo
+
+			err = rows.Scan(&pet.PetId, &pet.DogName, &pet.ShelterName, &pet.Weight, &pet.Age, &pet.Breed, &pet.PetLicense)
+			if err != nil {
+				c.AbortWithError(http.StatusInternalServerError, err)
+			}
+
+			pets = append(pets, pet)
 		}
-		// finally, close out the body and table
-		table += "</tbody></table>"
-		c.Data(http.StatusOK, "text/html", []byte(table))
+
+		returnData := struct{
+			Pets []petInfo `json:"pets"`
+		}{
+			pets,
+		}
+
+		c.JSON(http.StatusOK, returnData)
 	})
 
 	router.GET("/edit", func(c *gin.Context) {
+		btnId := c.Param("buttonId")
 
-		dogDetail, err := db.Query("SELECT dog.name, shelter.name, dog.weight, dog.age, dog.breed, dog.pet_license FROM dog JOIN shelter ON dog.shelter_id = shelter.id WHERE pet_id = 8")
+		dogDetail, err := db.Query("SELECT dog.name, shelter.name, dog.weight, dog.age, dog.breed, dog.pet_license FROM dog JOIN shelter ON dog.shelter_id = shelter.id WHERE pet_id = " + btnId)
 
 		if err != nil {
 			// careful about returning errors to the user!
@@ -119,27 +124,13 @@ func main() {
 		// 	dogName string
 		// }
 
-		var dogName string
-		var shelterName string
-		var weight int
-		var age int
-		var breed string
-		var petLicense int
+		var pet petInfo
 
 		for dogDetail.Next() {
-			dogDetail.Scan(&dogName, &shelterName, &weight, &age, &breed, &petLicense) // put columns here prefaced with &
+			dogDetail.Scan(&pet.DogName, &pet.ShelterName, &pet.Weight, &pet.Age, &pet.Breed, &pet.PetLicense) // put columns here prefaced with &
 		}
 
-		log.Println(dogName, breed)
-
-		c.JSON(http.StatusOK, gin.H{
-			"dogName":     dogName,
-			"shelterName": shelterName,
-			"weight":      weight,
-			"age":         age,
-			"breed":       breed,
-			"petLicense":  petLicense,
-		})
+		c.JSON(http.StatusOK, pet)
 
 	})
 
