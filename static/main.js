@@ -60,6 +60,12 @@ $(document).ready(function(){
         });
     }, "json")
 
+    // event listener for dog edit form submit button
+    $("#dog-edit-submit").click(function(){
+      // login(3);
+      console.log("***!***");
+    });
+
     $.get("/location", function(data){
          //   .then(() => {
          //
