@@ -132,10 +132,6 @@ func main() {
 			c.AbortWithError(http.StatusInternalServerError, err)
 		}
 
-		// type Login struct {
-		// 	dogName string
-		// }
-
 		var pet petInfo
 
 		for dogDetail.Next() {
@@ -146,7 +142,16 @@ func main() {
 
 	})
 
-	router.GET("/query2", func(c *gin.Context) {
+	router.POST("/query2", func(c *gin.Context) {
+
+		log.Println("/query2 in go called! *!*")
+
+	 	zipcode := c.PostForm("zipcode")
+		distance := c.PostForm("distance")
+
+		log.Println(zipcode, distance)
+
+
 		table := "<table class='table'><thead><tr>"
 		// put your query here
 		rows, err := db.Query("SELECT dog.name, dog.weight, member.first_name, member.last_name" +

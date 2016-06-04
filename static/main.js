@@ -129,8 +129,12 @@ $(document).ready(function(){
 
     function callGo2(params){
 
-        $.get("/query2", function(data){
-            $("#secondQuery").append(data);
+        $.post("/query2", params)
+        .done(function(data){
+
+
+
+            // $("#secondQuery").append(data);
         }, "html")
 
 
