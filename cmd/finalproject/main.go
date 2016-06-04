@@ -160,7 +160,7 @@ func main() {
 			" JOIN Location ON member.location_id = location.id" +
 			" WHERE 1 <= (SELECT ST_Distance (" +
 	          " ST_Transform(ST_GeomFromText('POINT(&lat $long)',32647),32647)," +
-	          " ST_Transform(ST_GeomFromText('POINT(37.0902 -95.7129)',32647),32647));") // <--- The center USA
+	          " ST_Transform(ST_GeomFromText('POINT(37.0902 -95.7129)',32647),32647)));") // <--- The center USA
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
