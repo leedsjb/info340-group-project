@@ -21,13 +21,13 @@ import (
 )
 
 type petInfo struct {
-	PetId int `json:"petId"`
-	DogName string `json:"dogName"`
+	PetId       int    `json:"petId"`
+	DogName     string `json:"dogName"`
 	ShelterName string `json:"shelterName"`
-	Weight int `json:"weight"`
-	Age int `json:"age"`
-	Breed string `json:"breed"`
-	PetLicense int `json:"petLicense"`
+	Weight      int    `json:"weight"`
+	Age         int    `json:"age"`
+	Breed       string `json:"breed"`
+	PetLicense  int    `json:"petLicense"`
 }
 
 var (
@@ -113,7 +113,7 @@ func main() {
 			pets = append(pets, pet)
 		}
 
-		returnData := struct{
+		returnData := struct {
 			Pets []petInfo `json:"pets"`
 		}{
 			pets,
@@ -146,21 +146,21 @@ func main() {
 
 		log.Println("/query2 in go called! *!*")
 
-	 	zipcode := c.PostForm("zipcode")
+		zipcode := c.PostForm("zipcode")
 		distance := c.PostForm("distance")
-
+		cords := geocode(zipcode)
+		log.Println(cords)
 		log.Println(zipcode, distance)
-
 
 		table := "<table class='table'><thead><tr>"
 		// put your query here
-		rows, err := db.Query("SELECT dog.name, dog.weight, member.first_name, member.last_name" +
-			" FROM dog JOIN rescuer ON dog.rescuer_id = rescuer.member_id" +
-			" JOIN member ON rescuer.member_id = member.id" +
-			" JOIN Location ON member.location_id = location.id" +
-			" WHERE 1 <= (SELECT ST_Distance (" +
-	          " ST_Transform(ST_GeomFromText('POINT(&lat $long)',32647),32647)," +
-	          " ST_Transform(ST_GeomFromText('POINT(37.0902 -95.7129)',32647),32647)));") // <--- The center USA
+		rows, err := db.Query("SELECT dog.name, dog.weight, member.first_name, member.last_name"+
+			" FROM dog JOIN rescuer ON dog.rescuer_id = rescuer.member_id"+
+			" JOIN member ON rescuer.member_id = member.id"+
+			" JOIN Location ON member.location_id = location.id"+
+			" WHERE 1 <= (SELECT ST_Distance ("+
+			" ST_Transform(ST_GeomFromText('POINT($lat $long)',32647),32647),"+
+			" ST_Transform(ST_GeomFromText('POINT(37.0902 -95.7129)',32647),32647)));", long, lat) // <--- The center USA
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
@@ -209,8 +209,8 @@ func main() {
 		rows, err := db.Query("UPDATE dog SET name = $1, weight = $2, age = $3, breed = $4, pet_license = $5 WHERE dog.pet_id = $6;", name, weight, age, breed, license, pet_id)
 
 		/*
-		Query for testing in terminal:
-		UPDATE dog SET dog.name = 'Riley', dog.weight = '10', dog.age = '10', dog.breed = 'Labrador;, dog.pet_license = '10' WHERE dog.pet_id = 8;
+			Query for testing in terminal:
+			UPDATE dog SET dog.name = 'Riley', dog.weight = '10', dog.age = '10', dog.breed = 'Labrador;, dog.pet_license = '10' WHERE dog.pet_id = 8;
 		*/
 
 		// ensure no errors were returned
@@ -298,7 +298,6 @@ func geocode(loc string) Coordinate {
 
 	point := data.ResourceSets[0].Resources[0].Point
 	location := Coordinate{Latitude: point.Coordinates[0].String(), Longitude: point.Coordinates[1].String()}
-
 	return location
 
 }
@@ -317,3 +316,4 @@ router.GET("/EXAMPLE", func(c *gin.Context) {
         }) // this returns a JSON file to the requestor
     // look at https://godoc.org/github.com/gin-gonic/gin to find other return types. JSON will be the most useful for this
 })
+*/
