@@ -149,6 +149,8 @@ func main() {
 	 	zipcode := c.PostForm("zipcode")
 		distance := c.PostForm("distance")
 
+		log.Println(zipcode, distance)
+
 
 		table := "<table class='table'><thead><tr>"
 		// put your query here
