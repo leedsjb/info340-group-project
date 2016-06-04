@@ -149,8 +149,6 @@ func main() {
 	 	zipcode := c.PostForm("zipcode")
 		distance := c.PostForm("distance")
 
-		log.Println(zipcode, distance)
-
 
 		table := "<table class='table'><thead><tr>"
 		// put your query here
@@ -158,7 +156,10 @@ func main() {
 			" FROM dog JOIN rescuer ON dog.rescuer_id = rescuer.member_id" +
 			" JOIN member ON rescuer.member_id = member.id" +
 			" JOIN Location ON member.location_id = location.id" +
-			" WHERE ST_DWithin(geocolumn, ‘POINT($lat  $long)’, $distance);") // <--- EDIT THIS LINE
+			" WHERE ST_DWithin(geocolumn, ‘POINT($lat  $long)’, $distance);") 
+
+		log.Println(rows)
+
 		if err != nil {
 			// careful about returning errors to the user!
 			c.AbortWithError(http.StatusInternalServerError, err)
@@ -205,11 +206,6 @@ func main() {
 		log.Println(name, location, weight, age, breed, license, pet_id)
 
 		rows, err := db.Query("UPDATE dog SET name = $1, weight = $2, age = $3, breed = $4, pet_license = $5 WHERE dog.pet_id = $6;", name, weight, age, breed, license, pet_id)
-
-		/*
-		Query for testing in terminal:
-		UPDATE dog SET dog.name = 'Riley', dog.weight = '10', dog.age = '10', dog.breed = 'Labrador;, dog.pet_license = '10' WHERE dog.pet_id = 8;
-		*/
 
 		// ensure no errors were returned
 		if err != nil {
@@ -270,8 +266,6 @@ func getJSON(url string, data interface{}) error {
 		return err
 	}
 
-	// TODO: Test for empty response
-
 	// Parse the JSON response
 	json.Unmarshal(body, &data)
 	if err != nil {
@@ -300,25 +294,3 @@ func geocode(loc string) Coordinate {
 	return location
 
 }
-
-/*
-Example of processing a GET request
-
-// this will run whenever someone goes to last-first-lab7.herokuapp.com/EXAMPLE
-router.GET("/EXAMPLE", func(c *gin.Context) {
-    // process stuff
-    // run queries
-    // do math
-    //decide what to return
-    c.JSON(http.StatusOK, gin.H{
-        "key": "value"
-        }) // this returns a JSON file to the requestor
-    // look at https://godoc.org/github.com/gin-gonic/gin to find other return types. JSON will be the most useful for this
-})
-
-SELECT dog.name, dog.weight, member.first_name, member.last_name FROM dog
-JOIN Rescuer ON dog.rescuer_id = rescuer.member_id
-JOIN Member ON rescuer.member_id = member.id
-JOIN Location ON member.location_id = location.id
-
-*/

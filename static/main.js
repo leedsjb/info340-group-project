@@ -34,11 +34,9 @@ $(document).ready(function(){
         $(".edit").click(function(e){
 
             btnId = $(this).attr('id'); // GLOBAL VARIABLE
-            console.log("BtnId =" + btnId);
 
             // define function to fill form
             var fillForm = function(data) {
-                console.log(data);
                 for (var i = 0; i < data.pets.length; i++) { // loop over each pet retrieved from the DB
                     if (data.pets[i].petId == btnId) { // look for the petId matching the edit button that was clicked
                         console.log(data.pets[i]);
@@ -66,9 +64,6 @@ $(document).ready(function(){
     // event listener for dog edit form submit button
     $("#dog-edit-submit").click(function(){
 
-      console.log("***!***");
-      console.log(btnId);
-
       // build struct from updates made to form
       var formfields = {
         name: $("#name").val(),
@@ -80,7 +75,6 @@ $(document).ready(function(){
         pet_id: btnId,
       }
 
-      console.log(formfields);
       callGo(formfields);
 
     });
@@ -90,41 +84,21 @@ $(document).ready(function(){
 
       $.post("/dog-edit", formfields)
         .done(function(data){
-            // if(data.result == "failed"){
-            //     console.log(data)
-            //     $("#result"+index).text("Failed to login! " + data.message);
-            // } else {
-            //     console.log(data)
-            //     $("#result"+index).text("Logged in as: " + data.username + (data.randomCode ? " (CODE: " + data.randomCode + ")" : ""));
-            // }
+        
         }.then(location.reload()));
 
     };
 
-    // $(document).ready(function(){
-        $("#show").click(function() {  // "Find a Dog" submit button event handler
-            
-            var params = {
-                zipcode: $("#zipcode").val(),
-                distance: $("#distance").val(),
-            }
+    $("#show").click(function() {  // "Find a Dog" submit button event handler
+        
+        var params = {
+            zipcode: $("#zipcode").val(),
+            distance: $("#distance").val(),
+        }
 
-            console.log(params)
+        callGo2(params); // call query2 in main.go, pass params from form fields
 
-            callGo2(params); // call query2 in main.go, pass params from form fields
-
-            
-
-        });
-    // });
-
-
-
-    // $.get("/location", function(data){
-         //   .then(() => {
-         //
-         //  })
-     // })
+    });
 
 
     function callGo2(params){
@@ -132,17 +106,10 @@ $(document).ready(function(){
         $.post("/query2", params)
         .done(function(data){
 
+            $("#secondQuery").append(data);
+            $("#secondQuery").toggle(); // display results in table
 
-
-            // $("#secondQuery").append(data);
         }, "html")
-
-
-
-        // .then(
-        //     $("#secondQuery").toggle(); // display results
-        // )
-
     };
 
 // end of $(document).ready()
